@@ -27,7 +27,11 @@ class BookList extends Component {
             .filter((b) => b.title.toLowerCase().includes(this.state.searchQuery))
             .map((b) => (
               <Col xs={12} md={4} key={b.asin}>
-                <SingleBook book={b} />
+                <SingleBook
+                  book={b}
+                  onBookSelected={this.props.onBookSelected}
+                  isSelected={b.asin === this.props.selectedAsin}
+                />
               </Col>
             ))}
         </Row>

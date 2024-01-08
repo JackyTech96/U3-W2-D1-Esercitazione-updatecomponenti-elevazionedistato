@@ -19,7 +19,9 @@ class CommentArea extends Component {
     }
   }
 
-  componentDidMount = async () => {
+  componentDidMount = this.fetchComments;
+
+  fetchComments = async () => {
     try {
       let response = await fetch("https://striveschool-api.herokuapp.com/api/comments/" + this.props.asin, {
         headers: {

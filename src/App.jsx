@@ -14,49 +14,13 @@ import { Component } from "react";
 class App extends Component {
   state = {
     selected: false,
-    comments: [],
-    isLoading: false,
-    isError: false,
   };
-  handleBookSelected = (book) => {
+  handleBookSelected = (asin) => {
     this.setState({
-      selected: book,
-      comments: [],
-      isLoading: true,
-      isError: false,
+      selected: asin,
     });
   };
-  componentDidUpdate(prevProps, prevState) {
-    const { selected } = this.state;
 
-    if (selected && selected !== prevState.selected) {
-      this.fetchComments(selected.asin);
-    }
-  }
-  componentDidMount = async () => {
-    try {
-      const { selected } = this.state;
-
-      if (selected) {
-        let response = await fetch(`https://striveschool-api.herokuapp.com/api/comments/${selected.asin}`, {
-          headers: {
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTcxZDQ2MDBkOGEyMDAwMThhNDhhNTkiLCJpYXQiOjE3MDQ3MjIwMTQsImV4cCI6MTcwNTkzMTYxNH0.5oiC5NhFirbYT_EbWwpqzpgTapmACPZoCR8RX3knFi8",
-          },
-        });
-
-        if (response.ok) {
-          let comments = await response.json();
-          this.setState({ comments: comments, isLoading: false, isError: false });
-        } else {
-          this.setState({ isLoading: false, isError: true });
-        }
-      }
-    } catch (error) {
-      console.log(error);
-      this.setState({ isLoading: false, isError: true });
-    }
-  };
   render() {
     return (
       <>
@@ -65,13 +29,10 @@ class App extends Component {
           <Welcome />
           <Row>
             <Col md={8}>
-              <BookList books={fantasy} onBookSelected={this.handleBookSelected} />
+              <BookList books={fantasy} onBookSelected={this.handleBookSelected} selected={this.state.selected} />
             </Col>
             <Col md={4}>
-              <CommentArea
-                comments={this.state.comments}
-                asin={this.state.selected ? this.state.selected.asin : false}
-              />
+              <CommentArea asin={this.state.selected ? this.state.selected : false} />
             </Col>
           </Row>
         </Container>
