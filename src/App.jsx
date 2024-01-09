@@ -13,7 +13,7 @@ import { Component } from "react";
 
 class App extends Component {
   state = {
-    selected: false,
+    selected: null,
   };
   handleBookSelected = (asin) => {
     this.setState({
@@ -32,7 +32,7 @@ class App extends Component {
               <BookList books={fantasy} onBookSelected={this.handleBookSelected} selected={this.state.selected} />
             </Col>
             <Col md={4}>
-              <CommentArea asin={this.state.selected ? this.state.selected : false} />
+              <CommentArea asin={this.state.selected ? this.state.selected : null} />
             </Col>
           </Row>
         </Container>

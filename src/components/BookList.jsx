@@ -15,6 +15,7 @@ class BookList extends Component {
             <Form.Group>
               <Form.Control
                 type="search"
+                n
                 placeholder="Cerca un libro"
                 value={this.state.searchQuery}
                 onChange={(e) => this.setState({ searchQuery: e.target.value })}
@@ -30,7 +31,7 @@ class BookList extends Component {
                 <SingleBook
                   book={b}
                   onBookSelected={this.props.onBookSelected}
-                  isSelected={b.asin === this.props.selectedAsin}
+                  isSelected={b.asin === this.props.selected}
                 />
               </Col>
             ))}
